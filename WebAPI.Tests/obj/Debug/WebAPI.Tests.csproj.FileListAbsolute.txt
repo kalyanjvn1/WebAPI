@@ -1,0 +1,8 @@
+C:\kalyan\VSProjects\HomeAway\WebAPI.Tests\WebAPI.Tests\bin\Debug\WebAPI.Tests.dll
+C:\kalyan\VSProjects\HomeAway\WebAPI.Tests\WebAPI.Tests\bin\Debug\WebAPI.Tests.pdb
+C:\kalyan\VSProjects\HomeAway\WebAPI.Tests\WebAPI.Tests\bin\Debug\Newtonsoft.Json.dll
+C:\kalyan\VSProjects\HomeAway\WebAPI.Tests\WebAPI.Tests\bin\Debug\nunit.framework.dll
+C:\kalyan\VSProjects\HomeAway\WebAPI.Tests\WebAPI.Tests\bin\Debug\Newtonsoft.Json.xml
+C:\kalyan\VSProjects\HomeAway\WebAPI.Tests\WebAPI.Tests\bin\Debug\nunit.framework.xml
+C:\kalyan\VSProjects\HomeAway\WebAPI.Tests\WebAPI.Tests\obj\Debug\WebAPI.Tests.dll
+C:\kalyan\VSProjects\HomeAway\WebAPI.Tests\WebAPI.Tests\obj\Debug\WebAPI.Tests.pdb
