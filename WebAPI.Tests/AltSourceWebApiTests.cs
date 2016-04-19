@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
-using System.Web;
-using System.Net.Http;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
 using WebAPI.Tests.Response;
 
 namespace WebAPI.Tests
@@ -21,7 +18,7 @@ namespace WebAPI.Tests
         protected string evNetwork = "ChargePoint Network";
         protected int fuelStationId = 0;
         protected string fuelStationName = "HYATT AUSTIN";
-        protected string expectedFuelStationAddress = "208 Barton Springs, Austin, Texas, USA, 78704";
+        protected string expectedFuelStationAddress = "208 Barton Springs Rd, Austin, TX, USA, 78704";
 
         [Test]
         public async Task GetTheNearestFeulStationByCity()
@@ -69,6 +66,7 @@ namespace WebAPI.Tests
             await GetTheNearestFeulStationByCity();
             using (var client = new HttpClient())
             {
+                Assert.Greater(fuelStationId, 0, "Fuel Station Id did not returned any value");
                 var uriBuilder = new UriBuilder(baseUrl + string.Format("alt-fuel-stations/v1/{0}.json", fuelStationId));
                 var query = HttpUtility.ParseQueryString(uriBuilder.Query);
                 query["api_key"] = apiKey;
@@ -81,11 +79,16 @@ namespace WebAPI.Tests
 
                 if (response.IsSuccessStatusCode)
                 {
-                    Fuel_Stations responseData = JsonConvert.DeserializeObject<Fuel_Stations>(response.Content.ReadAsStringAsync().Result);
+                    var responseData = JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result) as JObject;
+                    var altFuelResponseResponse = JsonConvert.DeserializeObject(responseData["alt_fuel_station"].ToString()) as JObject;
 
-                     if(responseData.station_name == fuelStationName)
+                    Fuel_Stations altFuelStation = JsonConvert.DeserializeObject<Fuel_Stations>(altFuelResponseResponse.ToString());
+
+                    Assert.IsNotNull(altFuelStation.station_name, "Response Data is null");
+
+                    if (altFuelStation.station_name == fuelStationName)
                      {
-                         string actualStationAddress = string.Concat(responseData.street_address,", ",responseData.city,", ",responseData.state,", ","USA, ",responseData.zip);
+                         string actualStationAddress = string.Concat(altFuelStation.street_address, ", ", altFuelStation.city, ", ", altFuelStation.state, ", ", "USA, ", altFuelStation.zip);
                          Assert.AreEqual(expectedFuelStationAddress, actualStationAddress, "Actual station address did not matched with expected station address");
                      }
  
